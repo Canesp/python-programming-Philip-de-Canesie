@@ -1,0 +1,1 @@
+print("Yo from module2!")
