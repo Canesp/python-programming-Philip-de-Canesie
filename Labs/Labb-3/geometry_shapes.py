@@ -2,40 +2,39 @@ from __future__ import annotations
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
-class Rektangel:
-
-    def __init__(self, x: float | int, y: float | int , width: float | int, height: float | int) -> None:
-        
-        if not isinstance(width, (int, float)):
-            raise TypeError(f"width need to be a int or float, not ({type(width)})")
-
-        if not isinstance(height, (int, float)):
-            raise TypeError(f"height need to be a int or float, not ({type(height)})")
-
-        if not isinstance(x, (int, float)):
-            raise TypeError(f"x need to be a int or float, not ({type(x)})")
-
-        if not isinstance(y, (int, float)):
-            raise TypeError(f"y need to be a int or float, not ({type(y)})")
-
-        if width < 1:
-            raise ValueError(f"widht need to be greater than 0 not ({width})")
-        
-        if height < 1:
-            raise ValueError(f"height need to be greater than 0 not ({height})")
-
-        self.width = width
-        self.height = height
+class shapes:
+    
+    def __init__(self, x: int | float, y: int | float) -> None:
         self.x = x
         self.y = y
 
-    @property
-    def area(self) -> float:
-        return self.width * self.height
+    ##--------------------------------------------------------------------##
 
-    @property 
-    def omkrets(self) -> float:
-        return (self.width * 2) + (self.height * 2) 
+    @property
+    def x(self):
+        return self._x
+
+    @x.setter
+    def x(self, value):
+        
+        if not isinstance(value, (int, float)):
+            raise TypeError(f"X value need to be a int or float, not -> ({type(value)})")
+
+        self._x = value
+
+    @property
+    def y(self):
+        return self._y
+
+    @x.setter
+    def y(self, value):
+        
+        if not isinstance(value, (int, float)):
+            raise TypeError(f"Y value need to be a int or float, not -> ({type(value)})")
+
+        self._y = value
+
+    ##--------------------------------------------------------------------##
 
     def __eq__(self, other) -> bool:
         return (self.area == other.area) and (self.omkrets == other.omkrets)
@@ -45,6 +44,31 @@ class Rektangel:
     
     def __ge__(self, other) -> bool:
         return (self.area >= self.area) and (self.omkrets >= other.omkrets)
+
+    ##--------------------------------------------------------------------##
+    
+
+        
+
+
+
+
+class Rektangel(shapes):
+
+    def __init__(self, x: int | float, y: int | float, width: int | float, height: int | float) -> None:
+        super().__init__(x, y)
+
+        self.width = width
+        self.height = height
+       
+
+    @property
+    def area(self) -> float:
+        return self.width * self.height
+
+    @property 
+    def omkrets(self) -> float:
+        return (self.width * 2) + (self.height * 2) 
 
     ##--------------------------------------------------------------------##
 
