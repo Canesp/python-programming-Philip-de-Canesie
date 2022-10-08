@@ -1,6 +1,7 @@
 from __future__ import annotations
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
+import math
 
 class shapes:
     
@@ -19,19 +20,19 @@ class shapes:
         
         if not isinstance(value, (int, float)):
             raise TypeError(f"X value need to be a int or float, not -> ({type(value)})")
-
+        print("x!")
         self._x = value
 
     @property
     def y(self):
         return self._y
 
-    @x.setter
+    @y.setter
     def y(self, value):
         
         if not isinstance(value, (int, float)):
             raise TypeError(f"Y value need to be a int or float, not -> ({type(value)})")
-
+        print(f"y! {value=}")
         self._y = value
 
     ##--------------------------------------------------------------------##
@@ -51,7 +52,7 @@ class shapes:
         
 
 
-
+#TODO Validate floats and ints !!
 
 class Rektangel(shapes):
 
@@ -70,6 +71,9 @@ class Rektangel(shapes):
     def omkrets(self) -> float:
         return (self.width * 2) + (self.height * 2) 
 
+    def kvadrat(self) -> float:
+        return self.width == self.height
+
     ##--------------------------------------------------------------------##
 
     def plot_graph(self) -> None:
@@ -84,6 +88,49 @@ class Rektangel(shapes):
 
     def __str__(self) -> str:
         return f"rektangel!!!" #TODO skriva text. 
+
+
+class Cirkel(shapes):
+
+    def __init__(self, x: int | float, y: int | float, radius: int | float) -> None:
+        super().__init__(x, y)
+
+        self.radius = radius
+
+    @property
+    def radius(self):
+        return self._radius 
+
+    @radius.setter
+    def radius(self, value):
+        
+        if not isinstance(value, (int, float)):
+            raise TypeError(f"radius value need to be a int or float, not -> ({type(value)})")
+        elif value <= 0: 
+            raise ValueError(f"radius need to be greater then zero, not -> ('{value}')")
+
+        self._radius = value
+
+    @property
+    def area(self) -> float:
+        return math.pi * (self._radius**2)
+
+    @property 
+    def omkrets(self) -> float:
+        return (2 * math.pi * self._radius)
+
+
+    def enhets_Cirkel(self) -> float:
+        return self.x == 0 and self.y == 0 and self._radius == 1
+
+
+    def __repr__(self) -> str:
+        return f"cirkel: 'radius' = {self._radius}"
+
+    def __str__(self) -> str:
+        return f"cirkel!!!" #TODO skriva text. 
+    
+
 
     
 
