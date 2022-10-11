@@ -270,7 +270,6 @@ class shapes(ABC):
             )  # checks if distance is less than radius.
 
     # Overload metods
-    # TODO felhantering
     # ==
     def __eq__(self, other) -> bool:
         return (self.area == other.area) and (self.omkrets == other.omkrets)
