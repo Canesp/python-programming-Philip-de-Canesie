@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
+from matplotlib.patches import Circle
 import numpy as np
 
 
@@ -12,7 +13,7 @@ class Plot:
             print(type(shape))
 
             if isinstance(shape, (float, int, str, list, bool)):
-                print(f"Shapes need to be a object")
+                print(f"Shape need to be a object")
 
             if not hasattr(shape, "x") and hasattr(shape, "y"):
                 print(f"object need to have a x and y pos")
@@ -22,20 +23,31 @@ class Plot:
 
     def graph(self):
 
-        f,ax = plt.subplots(1,1, figsize=(8,5))
-        ax.set_xlim((-50, 50))
-        ax.set_ylim((-50, 50))
+        f,ax = plt.subplots(1,1, figsize=(8,8))
         
         for shape in self.shapes:
 
-            rgb = np.random.rand(3,)
-
-            if shape.__class__.__name__ == "Rektangel":
-                print("draw shape")
-                ax.add_patch(Rectangle((shape.x, shape.y), shape.width, shape.height, linewidth=2, edgecolor=rgb,facecolor='none', ))
-                
+            ax.add_patch(shape.get_plot())
         
-        pass
+        ax.autoscale()
+        
+        print(ax.get_xlim()[1])
+
+        if ax.get_xlim() < ax.get_ylim():
+            if ax.get_xlim()[0] > ax.get_xlim()[1]:
+                ax.set_xlim(-ax.get_xlim()[0], ax.get_xlim()[0])
+                ax.set_ylim(-ax.get_xlim()[0], ax.get_xlim()[0])
+            else:
+                ax.set_xlim(-ax.get_xlim()[1], ax.get_xlim()[1])
+                ax.set_ylim(-ax.get_xlim()[1], ax.get_xlim()[1])
+        else:
+            if ax.get_ylim()[0] > ax.get_ylim()[1]:
+                ax.set_xlim(-ax.get_ylim()[0], ax.get_ylim()[0])
+                ax.set_ylim(-ax.get_ylim()[0], ax.get_ylim()[0])
+            else:
+                ax.set_xlim(-ax.get_ylim()[1], ax.get_ylim()[1])
+                ax.set_ylim(-ax.get_ylim()[1], ax.get_ylim()[1])
+        
 
     
         
