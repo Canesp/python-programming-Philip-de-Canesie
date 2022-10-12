@@ -511,7 +511,79 @@ class Cirkel(shapes):
 
 class Cube(Rektangel):
 
+    """
+    A class used to represent an Cube
+    
+    -----------------------------------
+
+    Attributes:
+    -----------
+ 
+
+    width : int | float 
+        represents the width of the cube.
+
+    height : int | float 
+        represents the height of the cube.
+
+    depth : int | float
+        represents the depth of the cube.
+
+    -----------------------------------
+
+    Propertis: 
+    ----------
+
+    width : int | float -> float 
+        getter and setter for rectangle width.
+    
+    height : int | float -> float 
+        getter and setter for rectangle height.
+
+    depth : int | float
+        represents the depth of the cube.
+
+    area : -> float
+        getter for the cube area.
+    
+    omkrets : -> float
+        getter for the cube omkrets. 
+    
+    volym : -> float
+        getter for the cube volym.
+
+    -----------------------------------
+    
+    Methods: 
+    --------
+
+    is_cube() -> bool
+        checks if cube is a square cube and returns a bool.
+
+    is_inside() -> bool
+        checks if a point is inside shape.
+    
+    get_plot() -> plot
+        returns a plot with the given shape.
+    
+    -----------------------------------
+    
+    """
+
     def __init__(self, x: int | float, y: int | float,z: int | float, width: int | float, height: int | float, depth: int | float) -> None:
+        
+        """
+        
+        Parameters:
+        -----------
+
+        depth : int | float 
+            represents the depth of the cube.
+
+        -----------------------------------
+
+        """
+        
         super().__init__(x, y, width, height)
 
         self.depth = depth

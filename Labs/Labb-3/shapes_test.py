@@ -1,24 +1,30 @@
 from __future__ import annotations
 import sys, os
+from time import sleep
 import unittest
 import math
 
 from geometry_shapes import Cirkel
 from geometry_shapes import Rektangel
+from geometry_shapes import Cube
 
 
 class TestShapes(unittest.TestCase):
     
     def setUp(self):
-        self.x, self.y = 1, 2
+        self.x, self.y, self.z = 1, 2, 1
         self.width, self.height = 2, 1
         self.radius = 1
+        self.depth = 1
 
     def create_rektangle(self):
         return Rektangel(x= self.x, y= self.y, width=self.width, height= self.height)
 
     def create_cirkel(self):
         return Cirkel(x= self.x, y= self.y, radius= self.radius)
+
+    def create_cube(self):
+        return Cube(x= self.x, y= self.y, z= self.z, width= self.width, height= self.height, depth= self.depth)
 
     """
         Testning rektangel
@@ -342,6 +348,213 @@ class TestShapes(unittest.TestCase):
         c1 = self.create_cirkel()
         o = 10
         self.assertNotEqual(c1.omkrets, o)
+
+    
+    """
+        Testning Cube
+
+        -----------------------------------
+    """
+    
+    # operator test Cube.
+
+    def test_equal_Cube(self):
+        cu1 = self.create_cube()
+        cu2 = Cube(x= 1, y= 2, z= 1, width=2, height=1, depth=1)
+        self.assertEqual(cu1, cu2)
+    
+    def test_not_equal_cube(self):
+        cu1 = self.create_cube()
+        cu2 = Cube(x= 1, y= 2, z= 1, width=3, height=1, depth=1)
+        self.assertNotEqual(cu1, cu2)
+    
+    def test_greater_cube(self):
+        cu1 = self.create_cube()
+        cu2 = Cube(x= 1, y= 2, z= 1, width=1, height=1, depth=1)
+        self.assertGreater(cu1, cu2)
+    
+    def test_not_greater_cube(self):
+        cu1 = self.create_cube()
+        cu2 = Cube(x= 1, y= 2, z= 1, width=5, height=1, depth=1)
+        self.assertLess(cu1, cu2)
+    
+    def test_greater_equal_cube(self):
+        cu1 = self.create_cube()
+        cu2 = Cube(x= 1, y= 2, z= 1, width=2, height=1, depth=1)
+        self.assertGreaterEqual(cu1, cu2)
+    
+    def test_not_greater_equal_cube(self):
+        cu1 = self.create_cube()
+        cu2 = Cube(x= 1, y= 2, z= 1, width=2, height=1, depth=1)
+        self.assertLessEqual(cu1, cu2)
+
+    #test error 
+
+    def test_empty_cube(self):
+        with self.assertRaises(TypeError):
+            cu = Cube()
+
+    def test_negativ_width_cube(self):
+        with self.assertRaises(ValueError):
+            cu = Cube(1, 1, 1, -1, 1, 1)
+    
+    def test_negativ_height_cube(self):
+        with self.assertRaises(ValueError):
+            r = Cube(1, 1, 1, 1, -1, 1)
+    
+    def test_negativ_depth_cube(self):
+        with self.assertRaises(ValueError):
+            r = Cube(1, 1, 1, 1, 1, -1)
+    
+    def test_string_width_cube(self):
+        with self.assertRaises(TypeError):
+            r = Cube(1, 1, 1, "1", 1, 1)
+
+    def test_string_height_cube(self):
+        with self.assertRaises(TypeError):
+            r = Cube(1, 1, 1, 1, "1", 1)
+    
+    def test_string_depth_cube(self):
+        with self.assertRaises(TypeError):
+            r = Cube(1, 1, 1, 1, 1, "1")
+    
+    def test_string_x_cube(self):
+        with self.assertRaises(TypeError):
+            r = Cube("1", 1, 1, 1, 1, 1)
+    
+    def test_string_y_cube(self):
+        with self.assertRaises(TypeError):
+            r = Cube(1, "1", 1, 1, 1, 1)
+    
+    def test_string_z_cube(self):
+        with self.assertRaises(TypeError):
+            r = Cube(1, 1, "1", 1, 1, 1)
+    
+    # Is_inside test cube
+
+    def test_is_inside_True_cube(self):
+        x, y, z = 1, 2, 1
+        cu1 = self.create_cube()
+        self.assertTrue(cu1.is_inside(x, y, z)) 
+    
+    def test_is_inside_True_border_cube(self):
+        x, y, z = 2, 2, 1
+        cu1 = self.create_cube()
+        self.assertTrue(cu1.is_inside(x, y, z)) 
+
+    def test_is_inside_False_cube(self):
+        x, y, z = 5, 5, 5
+        cu1 = self.create_cube()
+        self.assertFalse(cu1.is_inside(x, y, z))
+
+    def test_is_inside_string_x_cube(self):
+        x, y, z = "a", 1, 1
+        cu1 = self.create_cube()
+        with self.assertRaises(TypeError):
+            cu1.is_inside(x, y, z)
+    
+    def test_is_inside_string_y_cube(self):
+        x, y, z = 1, "1", 1
+        cu1 = self.create_cube()
+        with self.assertRaises(TypeError):
+            cu1.is_inside(x, y, z)
+    
+    def test_is_inside_string_z_cube(self):
+        x, y, z = 1, 1, "1"
+        cu1 = self.create_cube()
+        with self.assertRaises(TypeError):
+            cu1.is_inside(x, y, z)
+    
+    # Translate test cube
+
+    def test_translate_Equal_cube(self):
+        x, y, z = 1, 1, 1
+        cu1 = self.create_cube()
+        cu1.translate(x, y, z)
+        self.assertEqual(cu1.x, 2)
+        self.assertEqual(cu1.y, 3)
+        self.assertEqual(cu1.z, 2)
+    
+    def test_translate_Not_Equal_cube(self):
+        x, y, z = 1, 1, 1
+        cu1 = self.create_cube()
+        cu1.translate(x, y, z)
+        self.assertNotEqual(cu1.x, 3)
+        self.assertNotEqual(cu1.y, 4)
+        self.assertNotEqual(cu1.z, 4)
+
+    def test_translate_Equal_negativ_cube(self):
+        x, y, z = -1, -1, -1
+        cu1 = self.create_cube()
+        cu1.translate(x, y, z)
+        self.assertEqual(cu1.x, 0)
+        self.assertEqual(cu1.y, 1)
+        self.assertEqual(cu1.z, 0)
+
+    def test_translate_string_x_cube(self):
+        x, y, z = "1", 1, 1
+        cu1 = self.create_cube()
+        with self.assertRaises(TypeError):
+            cu1.is_inside(x, y, z)
+    
+    def test_translate_string_y_cube(self):
+        x, y, z = 1, "1", 1
+        cu1 = self.create_cube()
+        with self.assertRaises(TypeError):
+            cu1.is_inside(x, y, z)
+    
+    def test_translate_string_z_cube(self):
+        x, y, z = 1, "1", 1
+        cu1 = self.create_cube()
+        with self.assertRaises(TypeError):
+            cu1.is_inside(x, y, z)
+    
+    # is_cube test cube
+
+    def test_cube_True_cube(self):
+        cu1 = Cube(0, 0, 0, 1, 1, 1)
+        self.assertTrue(cu1.is_cube())
+    
+    def test_cube_False_cube(self):
+        cu1 = Cube(0, 0, 0, 1, 1, 2)
+        self.assertFalse(cu1.is_cube())
+
+    # area test cube
+
+    def test_area_Equal_cube(self):
+        cu1 = self.create_cube()
+        a = 2 
+        self.assertEqual(cu1.area, a)
+    
+    def test_area_not_Equal_cube(self):
+        cu1 = self.create_cube()
+        a = 16
+        self.assertNotEqual(cu1.area, a)
+
+    # omkrets test cube
+
+    def test_omkrets_Equal_cube(self):
+        cu1 = self.create_cube()
+        o = 16
+        self.assertEqual(cu1.omkrets, o)
+    
+    def test_omkrets_Not_Equal_cube(self):
+        cu1 = self.create_cube()
+        o = 10
+        self.assertNotEqual(cu1.omkrets, o)
+
+    # volym test cube
+
+    def test_volym_Equal_cube(self):
+        cu1 = self.create_cube()
+        v = 2
+        self.assertEqual(cu1.volym, v)
+    
+    def test_volym_Not_Equal_cube(self):
+        cu1 = self.create_cube()
+        v = 7
+        self.assertNotEqual(cu1.volym, v)
+
     
 
 if __name__ == "__main__":
