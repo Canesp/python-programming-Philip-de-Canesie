@@ -64,6 +64,14 @@ class PlotShapes:
 
         # makes a subplot. 
         f,ax = plt.subplots(1,1, figsize=(8,8))
+
+        # moves the spines to the middle.
+        ax.spines['left'].set_position('center')
+        ax.spines['bottom'].set_position('center')
+
+        #removes the right and top spines.
+        ax.spines['right'].set_color('none')
+        ax.spines['top'].set_color('none')
         
         # call the get_plot() from objects and plots them. 
         for shape in self.shapes:

@@ -108,7 +108,7 @@ class shapes(ABC):
         self._y = value  # sets the y value to the in value.
 
     # abstractmetod for area.
-    @abstractmethod
+    @abstractmethod 
     def area():
         pass
 
@@ -118,7 +118,7 @@ class shapes(ABC):
         pass
 
     # Method that calculates the graph size. x-lim and y-lim.
-    def plot_size(self):
+    def plot_size(self): # TODO ta bort
 
         """
             calculates the plot x and y size based on positon and size of shape. 
@@ -156,7 +156,7 @@ class shapes(ABC):
 
             return (x_size, y_size)  # returns the sizes.
 
-    def draw_graph(self):
+    def draw_graph(self): # TODO ta bort 
 
         """
         plots and draws the shape on graph.
@@ -228,13 +228,10 @@ class shapes(ABC):
         self._x += x
         self._y += y
 
-        # calls the draw_graph() method that redraw the graph.
-        self.draw_graph()
-
-    def is_inside(self, x: int | float, y: int | float):
+    def is_inside2(self, x: int | float, y: int | float):
 
         """
-        eturns True or False depending on if given position is inside shape. 
+        returns True or False depending on if given position is inside shape. 
 
 
         takes in a position of x and y. 
@@ -326,6 +323,12 @@ class Rektangel(shapes):
 
     kvadrat() -> bool
         checks if rectangel is a square and returns a bool.
+
+    is_inside() -> bool
+        checks if a point is inside shape.
+    
+    get_plot() -> plot
+        returns a plot with the given shape.
     
     -----------------------------------
     
@@ -420,12 +423,46 @@ class Rektangel(shapes):
         """
         return self.width == self.height
 
+    def is_inside(self, x: int | float, y: int | float):
+
+        """
+        returns True or False depending on if given position is inside shape. 
+
+
+        takes in a position of x and y. 
+
+        -----------------------------------
+        """
+        
+        # checks if x and y are int or float else -> error
+        if not isinstance(x, (int, float)):
+            raise TypeError(
+                f"x value need to be a int or float, not -> ({type(x)})"
+            )  # error massage.
+        if not isinstance(y, (int, float)):
+            raise TypeError(
+                f"y value need to be a int or float, not -> ({type(y)})"
+            )  # error massage.
+
+        # gets the corner position (x, y)
+        x1, y1 = (self._x - (self._width / 2)), (self._y - (self._height / 2))
+        x2, y2 = (self._x + (self._width / 2)), (self._y + (self._height / 2))
+        # returns True if x and y is inside corners 
+        return (x1, y1) <= (x, y) <= (x2, y2)
+
     def get_plot(self):
+        
+        """
+
+            returns a plot of shape.
+            -----------------------------------
+        
+        """
 
         rgb = np.random.rand(3,)
 
         return Rectangle(
-            (self._x, self._y),
+            (self._x - (self._width / 2), self._y - (self._height / 2)),
             self._width,
             self._height,
             linewidth=2.5,
@@ -478,6 +515,12 @@ class Cirkel(shapes):
 
     enhets_Cirkel() -> bool
         checks if cirkel is a enhets cirkel and returns a bool.
+    
+    is_inside() -> bool
+        checks if a point is inside shape.
+
+    get_plot() -> plot
+        returns a plot with the given shape.
     
     -----------------------------------
     
@@ -545,7 +588,38 @@ class Cirkel(shapes):
 
         return self.x == 0 and self.y == 0 and self._radius == 1
 
+    def is_inside(self, x: int | float, y: int | float):
+
+        """
+        returns True or False depending on if given position is inside shape. 
+
+
+        takes in a position of x and y. 
+
+        -----------------------------------
+        """
+        
+        # checks if x and y are int or float else -> error
+        if not isinstance(x, (int, float)):
+            raise TypeError(
+                f"x value need to be a int or float, not -> ({type(x)})"
+            )  # error massage.
+        if not isinstance(y, (int, float)):
+            raise TypeError(
+                f"y value need to be a int or float, not -> ({type(y)})"
+            )  # error massage.
+        
+        # returns True if x and y is inside cirkel 
+        return math.sqrt(pow(x - self._x, 2) + pow(y - self._y, 2)) <= self._radius
+
     def get_plot(self):
+
+        """
+        
+            returns a plot of shape.
+            -----------------------------------
+        
+        """
 
         rgb = np.random.rand(3,)
 
