@@ -40,17 +40,8 @@ class shapes(ABC):
     Methods: 
     --------
 
-    plot_size(self): -> tuple(floats)
-        calculates the plot x and y size based on positon and size of shape. 
-    
-    draw_graph(self): 
-        plots and draws the shape on graph. 
-
     translate(self, x: int | float, y: int | float):
         moves the shape to a new position based on x and y.
-
-    is_inside(self, x: int | float, y: int | float) -> bool:
-        returns True or False depending on if given position is inside shape. 
     
     -----------------------------------
     
@@ -108,101 +99,18 @@ class shapes(ABC):
         self._y = value  # sets the y value to the in value.
 
     # abstractmetod for area.
+    @property
     @abstractmethod 
     def area():
         pass
 
     # abstractmetod for omkrets.
+    @property
     @abstractmethod
     def omkrets():
         pass
-
-    # Method that calculates the graph size. x-lim and y-lim.
-    def plot_size(self): # TODO ta bort
-
-        """
-            calculates the plot x and y size based on positon and size of shape. 
-            returns a Tupel of x and y (x, y)
-            -----------------------------------
-            
-        """
-
-        # checks if the shape is a rektangel or not.
-        if self.__class__.__name__ == "Rektangel":
-
-            # sets the variables with offset.
-            x_size = self._x + self._width + 2
-            y_size = self._y + self._height + 2
-
-            # checks what side is the longest and makes that the size.
-            if x_size < y_size:
-                x_size = y_size
-            else:
-                y_size = x_size
-
-            return (x_size, y_size)  # return the sizes.
-
-        else:
-
-            # sets the variables with offset.
-            x_size = self._x + self.radius + 2
-            y_size = self._y + self.radius + 2
-
-            # checks what side is the longest and makes that the size.
-            if x_size < y_size:
-                x_size = y_size
-            else:
-                y_size = x_size
-
-            return (x_size, y_size)  # returns the sizes.
-
-    def draw_graph(self): # TODO ta bort 
-
-        """
-        plots and draws the shape on graph.
-
-        -----------------------------------
-        """
-
-        # creates a subplot
-        fig, ax = plt.subplots(1, 1, figsize=(8, 8))
-
-        # Gets the plot size from the plot_size method.
-        x_size, y_size = self.plot_size()
-
-        # sets the plot size / x and y lim.
-        ax.set_xlim((-x_size, x_size))
-        ax.set_ylim((-y_size, y_size))
-
-        # checks if the shape is a rektangel or not.
-        if self.__class__.__name__ == "Rektangel":
-
-            # Draw the rektangel on the plot.
-            ax.add_patch(
-                Rectangle(
-                    (self._x, self._y),
-                    self._width,
-                    self._height,
-                    linewidth=2,
-                    edgecolor="b",
-                    facecolor="none",
-                )
-            )
-
-        # checks if the shape is a Cirkel or not.
-        elif self.__class__.__name__ == "Cirkel":
-
-            # draw the cirkel on the plot.
-            ax.add_patch(
-                Circle(
-                    (self._x, self._y),
-                    self._radius,
-                    linewidth=2,
-                    edgecolor="b",
-                    facecolor="none",
-                )
-            )
-
+    
+    # method for moving shape
     def translate(self, x: int | float, y: int | float):
 
         """
@@ -227,44 +135,6 @@ class shapes(ABC):
         # changes the x and y variables
         self._x += x
         self._y += y
-
-    def is_inside2(self, x: int | float, y: int | float):
-
-        """
-        returns True or False depending on if given position is inside shape. 
-
-
-        takes in a position of x and y. 
-
-        -----------------------------------
-        """
-
-        # checks if x and y are int or float else -> error
-        if not isinstance(x, (int, float)):
-            raise TypeError(
-                f"x value need to be a int or float, not -> ({type(x)})"
-            )  # error massage.
-        if not isinstance(y, (int, float)):
-            raise TypeError(
-                f"y value need to be a int or float, not -> ({type(y)})"
-            )  # error massage.
-
-        # checks if the shape is a rektangel
-        if self.__class__.__name__ == "Rektangel":
-            # return True if point is inside of shape and False if outside.
-            return (
-                abs(x) - abs(self._x + (self._width / 2))
-                < 0  # takes abs point x pos -  x abs of pos + (width/2).
-                and abs(y) - abs(self._y + (self._height / 2))
-                < 0  # takes abs point y pos -  y abs of pos + (height/2).
-            )
-
-        # if not a rektangel
-        else:
-            # return True if point is inside of shape and False if outside.
-            return (
-                math.sqrt(pow(x - self._x, 2) + pow(y - self._y, 2)) < self._radius
-            )  # checks if distance is less than radius.
 
     # Overload metods
     # ==
@@ -414,7 +284,7 @@ class Rektangel(shapes):
         return (self.width * 2) + (self.height * 2)  # returns the omkrets of rectangle.
 
     # method for checking if the rectangle is a square.
-    def kvadrat(self) -> bool:
+    def square(self) -> bool:
         """
         checks if the rectangle is a square.
         retruns True if is a square and False if not. 
@@ -638,4 +508,135 @@ class Cirkel(shapes):
     # __str__() overload
     def __str__(self) -> str:
         return f"cirkel!!!"  # TODO skriva text.
+
+class Cube(Rektangel):
+
+    def __init__(self, x: int | float, y: int | float,z: int | float, width: int | float, height: int | float, depth: int | float) -> None:
+        super().__init__(x, y, width, height)
+
+        self.depth = depth
+        self.z = z
+
+    # property getter for z
+    @property
+    def z(self):
+        return self._z
+
+    # setter for z
+    @z.setter
+    def z(self, value):
+
+        if not isinstance(value, (int, float)):  # checks if value is a int or float.
+            raise TypeError(
+                f"Z value need to be a int or float, not -> ({type(value)})"  # error message.
+            )
+
+        self._z = value  # sets the z value to the in value.
+
+    # property getter for depth.
+    @property
+    def depth(self) -> float:
+        return self._depth
+
+    # property setter for depth.
+    @depth.setter
+    def depth(self, value):
+
+        # checks if value is a int or float.
+        if not isinstance(value, (int, float)):
+            raise TypeError(
+                f"depth need to be a int or float, not -> ({type(value)})"
+            )  # error message.
+        elif value <= 0:
+            raise ValueError(
+                f"depth need to be greater then zero, not -> ('{value}')"
+            )  # error message.
+
+        # sets the depth to the value.
+        self._depth = value
+
+    # property getter for cube area.
+    @property
+    def area(self) -> float:
+        return self._width * self._height * self._depth # returns the area of the cube.
+
+    # property getter for cube omkrets.
+    @property
+    def omkrets(self) -> float:
+        return (self._width * 4) + (self._height * 4) + (self._depth * 4) # returns the omkrets of cube.
+
+    # property getter for cube volym 
+    @property
+    def volym(self) -> float:
+        return (self._width * self._height * self._depth) # returns the volym of cube.
+
+    # method for moving shape
+    def translate(self, x: int | float, y: int | float, z: int | float):
+
+        """
+        moves the shape to a new position based on x, y and z.
+        
+    
+        takes in a position of x, y and z. 
+        
+        -----------------------------------
+        """
+
+        # checks if z is a int or float else -> error
+        if not isinstance(z, (int, float)):
+            raise TypeError(
+                f"z value need to be a int or float, not -> ({type(x)})"
+            )  # error massage.
+
+        super().translate(x, y)
+
+        self._z += z 
+    
+    # method to check 
+    def is_inside(self, x: int | float, y: int | float, z: int | float):
+
+        """
+        returns True or False depending on if given position is inside shape. 
+
+
+        takes in a position of x, y and z. 
+
+        -----------------------------------
+        """
+        
+        if not isinstance(z, (int, float)):
+            raise TypeError(
+                f"z value need to be a int or float, not -> ({type(z)})"
+            )  # error massage.
+
+        # gets the corner position (z)
+        z1, z2 = (self._z - (self._depth / 2)), (self._z + (self._depth / 2))
+        
+        # returns True if x, y and z is inside corners 
+        return super().is_inside(x, y) and z1 <= z <= z2
+
+    # method for checking if the rectangle is a square.
+    def is_cube(self) -> bool:
+        """
+        checks if the Cube is a cube.
+        retruns True if is a cube and False if not. 
+        -----------------------------------
+
+        """
+        return self._width == self._height == self._depth
+
+    # __repr__() overload
+    def __repr__(self) -> str:
+        return f"rektangel: 'width' = {self.width} 'height' = {self.height}"
+
+    # __str__() overload
+    def __str__(self) -> str:
+        return f"rektangel!!!"  # TODO skriva text.
+
+
+
+
+
+
+
 
