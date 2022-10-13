@@ -1,4 +1,5 @@
 from __future__ import annotations
+from turtle import circle
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from matplotlib.patches import Circle
@@ -148,9 +149,14 @@ class shapes(ABC):
     # >= and <=
     def __ge__(self, other) -> bool:
         return (self.area >= self.area) and (self.omkrets >= other.omkrets)
+    
+    # __str__() overload
+    def __str__(self) -> str:
+        return f"Shape is class {self.__class__.__name__} and is a shape"
 
-
-# TODO Validate floats and ints !!
+    # __repr__() overload
+    def __repr__(self) -> str:
+        return f"Shape: 'x' = {self._x} 'y' = {self._y}"
 
 
 class Rektangel(shapes):
@@ -291,6 +297,8 @@ class Rektangel(shapes):
         -----------------------------------
 
         """
+        
+        # returns True if width and height is the same. 
         return self.width == self.height
 
     def is_inside(self, x: int | float, y: int | float):
@@ -329,8 +337,10 @@ class Rektangel(shapes):
         
         """
 
+        # makes a random color in rgb
         rgb = np.random.rand(3,)
 
+        # returns the ploted rektangel
         return Rectangle(
             (self._x - (self._width / 2), self._y - (self._height / 2)),
             self._width,
@@ -340,14 +350,13 @@ class Rektangel(shapes):
             facecolor="none",
         )
 
-    # __repr__() overload
-    def __repr__(self) -> str:
-        return f"rektangel: 'width' = {self.width} 'height' = {self.height}"
-
     # __str__() overload
     def __str__(self) -> str:
-        return f"rektangel!!!"  # TODO skriva text.
+        return f"Rektangel is class {self.__class__.__name__} and is a square = {self.square()}"
 
+    # __repr__() overload
+    def __repr__(self) -> str:
+        return f"Rektangel: 'x' = {self._x} 'y' = {self._y} 'width' = {self._width} 'height' = {self._height}"
 
 class Cirkel(shapes):
 
@@ -456,6 +465,7 @@ class Cirkel(shapes):
 
         """
 
+        # returns True if x and y == 0 and radius == 1
         return self.x == 0 and self.y == 0 and self._radius == 1
 
     def is_inside(self, x: int | float, y: int | float):
@@ -490,9 +500,10 @@ class Cirkel(shapes):
             -----------------------------------
         
         """
-
+        # makes a random color in rgb
         rgb = np.random.rand(3,)
 
+        # returns the ploted cirkel.
         return Circle(
             (self._x, self._y),
             self._radius,
@@ -501,13 +512,13 @@ class Cirkel(shapes):
             facecolor="none",
         )
 
-    # __repr__() overload
-    def __repr__(self) -> str:
-        return f"cirkel: 'radius' = {self._radius}"
-
     # __str__() overload
     def __str__(self) -> str:
-        return f"cirkel!!!"  # TODO skriva text.
+        return f"Cirkel is class {self.__class__.__name__} and is a enhets cirkel = {self.enhets_Cirkel()}"
+
+    # __repr__() overload
+    def __repr__(self) -> str:
+        return f"Cirkel: 'x' = {self._x} 'y' = {self._y} 'radius' = {self._radius}"
 
 class Cube(Rektangel):
 
@@ -519,7 +530,6 @@ class Cube(Rektangel):
     Attributes:
     -----------
  
-
     width : int | float 
         represents the width of the cube.
 
@@ -543,6 +553,9 @@ class Cube(Rektangel):
     depth : int | float
         represents the depth of the cube.
 
+    z : int | float -> float 
+        getter and setter for z.
+
     area : -> float
         getter for the cube area.
     
@@ -563,8 +576,8 @@ class Cube(Rektangel):
     is_inside() -> bool
         checks if a point is inside shape.
     
-    get_plot() -> plot
-        returns a plot with the given shape.
+    translate() : none
+        moves the shape by x, y and z
     
     -----------------------------------
     
@@ -586,6 +599,7 @@ class Cube(Rektangel):
         
         super().__init__(x, y, width, height)
 
+        # parameters 
         self.depth = depth
         self.z = z
 
@@ -657,12 +671,12 @@ class Cube(Rektangel):
         # checks if z is a int or float else -> error
         if not isinstance(z, (int, float)):
             raise TypeError(
-                f"z value need to be a int or float, not -> ({type(x)})"
+                f"z value need to be a int or float, not -> ({type(z)})"
             )  # error massage.
 
         super().translate(x, y)
 
-        self._z += z 
+        self._z += z # adds the z to position 
     
     # method to check 
     def is_inside(self, x: int | float, y: int | float, z: int | float):
@@ -675,7 +689,7 @@ class Cube(Rektangel):
 
         -----------------------------------
         """
-        
+        # checks if z is a int or float else -> error.
         if not isinstance(z, (int, float)):
             raise TypeError(
                 f"z value need to be a int or float, not -> ({type(z)})"
@@ -687,28 +701,181 @@ class Cube(Rektangel):
         # returns True if x, y and z is inside corners 
         return super().is_inside(x, y) and z1 <= z <= z2
 
-    # method for checking if the rectangle is a square.
+    # method for checking if the shape is a cube.
     def is_cube(self) -> bool:
         """
-        checks if the Cube is a cube.
+        checks if the shape is a cube.
         retruns True if is a cube and False if not. 
         -----------------------------------
 
         """
+        # returns True if width, height and depth is the same.
         return self._width == self._height == self._depth
-
-    # __repr__() overload
-    def __repr__(self) -> str:
-        return f"rektangel: 'width' = {self.width} 'height' = {self.height}"
 
     # __str__() overload
     def __str__(self) -> str:
-        return f"rektangel!!!"  # TODO skriva text.
+        return f"Cube is class {self.__class__.__name__} and is a cube = {self.is_cube()}"
+
+    # __repr__() overload
+    def __repr__(self) -> str:
+        return f"Cube: 'x' = {self._x} 'y' = {self._y} 'z' = {self._z} 'width' = {self._width} 'height' = {self._height} 'depth' = {self._depth}"
+
+class Sphere(Cirkel): 
+
+    """
+    A class used to represent an sphere
+    
+    -----------------------------------
+
+    Attributes:
+    -----------
+
+    radius : int | float -> float 
+        getter and setter for sphere radius.
+
+    -----------------------------------
+
+    Propertis: 
+    ----------
+
+    z : int | float -> float 
+        getter and setter for z.
+    
+    area : -> float
+        getter for the sphere area.
+    
+    omkrets : -> float
+        getter for the sphere omkrets. 
+    
+    volym : -> float
+        getter for the sphere volym.
+
+    -----------------------------------
+    
+    Methods: 
+    --------
+
+    is_unit_sphere() -> bool
+        checks if sphere is a unit sphere and returns a bool.
+
+    is_inside() -> bool
+        checks if a point is inside shape.
+
+    translate() : none
+        moves the shape by x, y and z
+    
+    -----------------------------------
+    
+    """
+
+    def __init__(self, x: int | float, y: int | float, z: int | float, radius: int | float) -> None:
+        
+        """
+        
+        Parameters:
+        -----------
+
+        z : int | float 
+            represents the z position of the sphere.
+
+        -----------------------------------
+
+        """
+        
+        super().__init__(x, y, radius)
+
+        #parameter 
+        self.z = z
+
+    # property getter for z
+    @property
+    def z(self):
+        return self._z
+
+    # setter for z
+    @z.setter
+    def z(self, value):
+
+        if not isinstance(value, (int, float)):  # checks if value is a int or float.
+            raise TypeError(
+                f"Z value need to be a int or float, not -> ({type(value)})"  # error message.
+            )
+
+        self._z = value  # sets the z value to the in value.
+
+    # property getter for sphere area.
+    @property
+    def area(self) -> float:
+        return (4 * math.pi * self._radius**2) # returns the area of the sphere.
+    
+    # property getter for sphere omkrets.
+    @property
+    def omkrets(self) -> float:
+        return (2 * math.pi * self._radius) # returns the omkrets of sphere.
+
+    # property getter for sphere volym 
+    @property
+    def volym(self) -> float:
+        return ((4 / 3) * math.pi * self._radius**3) # returns the volym of sphere.
+
+    # method for moving shape
+    def translate(self, x: int | float, y: int | float, z: int | float):
+
+        """
+        moves the shape to a new position based on x, y and z.
+        
+    
+        takes in a position of x, y and z. 
+        
+        -----------------------------------
+        """
+
+        # checks if z is a int or float else -> error
+        if not isinstance(z, (int, float)):
+            raise TypeError(
+                f"z value need to be a int or float, not -> ({type(z)})"
+            )  # error massage.
+
+        super().translate(x, y)
+
+        self._z += z # adds the z to the old z. 
+
+    # method to check if point is inside shape
+    def is_inside(self, x: int | float, y: int | float, z: int | float):
+
+        """
+        returns True or False depending on if given position is inside shape. 
 
 
+        takes in a position of x, y and z. 
 
+        -----------------------------------
+        """
+        # checks if z is a int or float else -> error.
+        if not isinstance(z, (int, float)):
+            raise TypeError(
+                f"z value need to be a int or float, not -> ({type(z)})"
+            )  # error massage.
+        
+        # returns True if x, y and z is inside shape
+        return ((pow(x - self._x, 2) + pow(y - self._y, 2) + pow(z - self._z, 2))**0.5) <= self._radius
 
+    # method for checking if the sphere is a unit sphere.
+    def is_unit_sphere(self) -> bool:
+        """
+        checks if the Sphere is a unit sphere.
+        retruns True if is a unit sphere and False if not. 
+        -----------------------------------
 
+        """
+        # returns true if x y z is 0 and radius == 1.
+        return (self._x, self._y, self._z) == (0, 0, 0) and self._radius == 1
 
+    # __str__() overload
+    def __str__(self) -> str:
+        return f"Sphere is class {self.__class__.__name__} and is a unit sphere = {self.is_unit_sphere()}"
 
+    # __repr__() overload
+    def __repr__(self) -> str:
+        return f"Sphere: 'x' = {self._x} 'y' = {self._y} 'z' = {self._z} 'radius' = {self._radius}"
 
