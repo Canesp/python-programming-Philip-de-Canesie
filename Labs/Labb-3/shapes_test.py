@@ -7,6 +7,7 @@ import math
 from geometry_shapes import Cirkel
 from geometry_shapes import Rektangel
 from geometry_shapes import Cube
+from geometry_shapes import Sphere
 
 
 class TestShapes(unittest.TestCase):
@@ -25,6 +26,9 @@ class TestShapes(unittest.TestCase):
 
     def create_cube(self):
         return Cube(x= self.x, y= self.y, z= self.z, width= self.width, height= self.height, depth= self.depth)
+
+    def create_sphere(self):
+        return Sphere(x= self.x, y= self.y, z= self.z, radius= self.radius)
 
     """
         Testning rektangel
@@ -197,7 +201,7 @@ class TestShapes(unittest.TestCase):
         -----------------------------------
     """
 
-    # operator test rektangel.
+    # operator test cirkel.
 
     def test_equal_cirkel(self):
         c1 = self.create_cirkel()
@@ -275,7 +279,7 @@ class TestShapes(unittest.TestCase):
         with self.assertRaises(TypeError):
             c1.is_inside(x, y)
     
-    def test_is_inside_string_x_cirkel(self):
+    def test_is_inside_string_y_cirkel(self):
         x, y = 1, "1"
         c1 = self.create_cirkel()
         with self.assertRaises(TypeError):
@@ -302,6 +306,7 @@ class TestShapes(unittest.TestCase):
         c1 = self.create_cirkel()
         c1.translate(x, y)
         self.assertEqual(c1.x, 0)
+        self.assertEqual(c1.y, 1)
 
     def test_translate_string_x_cirkel(self):
         x, y = "1", 1
@@ -327,7 +332,7 @@ class TestShapes(unittest.TestCase):
 
     # area test Cirkel 
 
-    def test_area_Equal_rektangle(self):
+    def test_area_Equal_cirkel(self):
         c1 = self.create_cirkel()
         a = math.pi * 1**2
         self.assertEqual(c1.area, a)
@@ -337,7 +342,7 @@ class TestShapes(unittest.TestCase):
         a = 4
         self.assertNotEqual(c1.area, a)
 
-    # omkrets test rektangel
+    # omkrets test cirkel
 
     def test_omkrets_Equal_cirkel(self):
         c1 = self.create_cirkel()
@@ -555,7 +560,195 @@ class TestShapes(unittest.TestCase):
         v = 7
         self.assertNotEqual(cu1.volym, v)
 
+    """
+        Testning Sphere.
+
+        -----------------------------------
+    """
+
+    # operator test sphere.
+
+    def test_equal_sphere(self):
+        s1 = self.create_sphere()
+        s2 = Sphere(x= 1, y= 2, z= 1, radius= 1)
+        self.assertEqual(s1, s2)
     
+    def test_not_equal_sphere(self):
+        s1 = self.create_sphere()
+        s2 = Sphere(x= 1, y= 2, z= 1, radius= 3)
+        self.assertNotEqual(s1, s2)
+    
+    def test_greater_sphere(self):
+        s1 = self.create_sphere()
+        s2 = Sphere(x= 1, y= 2, z=1, radius= 0.5)
+        self.assertGreater(s1, s2)
+    
+    def test_not_greater_sphere(self):
+        s1 = self.create_cirkel()
+        s2 = Sphere(x= 1, y= 2, z= 1, radius= 5)
+        self.assertLess(s1, s2)
+    
+    def test_greater_equal_sphere(self):
+        s1 = self.create_sphere()
+        s2 = Sphere(x= 1, y= 2, z= 1, radius=1)
+        self.assertGreaterEqual(s1, s2)
+    
+    def test_not_greater_equal_sphere(self):
+        s1 = self.create_sphere()
+        s2 = Sphere(x= 1, y= 2, z= 1, radius= 1)
+        self.assertLessEqual(s1, s2)
+
+    #test error 
+
+    def test_empty_sphere(self):
+        with self.assertRaises(TypeError):
+            r = Sphere()
+
+    def test_negativ_radius_sphere(self):
+        with self.assertRaises(ValueError):
+            r = Sphere(1, 1, 1, -1)
+    
+    def test_string_radius_sphere(self):
+        with self.assertRaises(TypeError):
+            r = Sphere(1, 1, 1, "1")
+
+    
+    def test_string_x_sphere(self):
+        with self.assertRaises(TypeError):
+            r = Sphere("1", 1, 1, 1)
+    
+    def test_string_y_sphere(self):
+        with self.assertRaises(TypeError):
+            r = Sphere(1, "1", 1, 1)
+    
+    def test_string_z_sphere(self):
+        with self.assertRaises(TypeError):
+            r = Sphere(1, 1, "1", 1)
+    
+    # Is_inside test sphere
+
+    def test_is_inside_True_sphere(self):
+        x, y, z = 1, 2, 1
+        s1 = self.create_sphere()
+        self.assertTrue(s1.is_inside(x, y, z)) 
+    
+    def test_is_inside_True_border_sphere(self):
+        x, y, z = 2, 2, 1
+        s1 = self.create_sphere()
+        self.assertTrue(s1.is_inside(x, y, z)) 
+
+    def test_is_inside_False_sphere(self):
+        x, y, z = 5, 5, 5
+        s1 = self.create_sphere()
+        self.assertFalse(s1.is_inside(x, y, z))
+
+    def test_is_inside_string_x_sphere(self):
+        x, y, z = "a", 1, 1
+        s1 = self.create_sphere()
+        with self.assertRaises(TypeError):
+            s1.is_inside(x, y, z)
+    
+    def test_is_inside_string_y_sphere(self):
+        x, y, z = 1, "1", 1
+        s1 = self.create_cirkel()
+        with self.assertRaises(TypeError):
+            s1.is_inside(x, y, z)
+    
+    def test_is_inside_string_z_sphere(self):
+        x, y, z = 1, 1, "1"
+        s1 = self.create_cirkel()
+        with self.assertRaises(TypeError):
+            s1.is_inside(x, y, z)
+    
+    # Translate test sphere
+
+    def test_translate_Equal_sphere(self):
+        x, y, z = 1, 1, 1
+        s1 = self.create_sphere()
+        s1.translate(x, y, z)
+        self.assertEqual(s1.x, 2)
+        self.assertEqual(s1.y, 3)
+        self.assertEqual(s1.z, 2)
+    
+    def test_translate_Not_Equal_sphere(self):
+        x, y, z = 1, 1, 1
+        s1 = self.create_sphere()
+        s1.translate(x, y, z)
+        self.assertNotEqual(s1.x, 3)
+        self.assertNotEqual(s1.y, 4)
+        self.assertNotEqual(s1.z, 3)
+
+    def test_translate_Equal_negativ_sphere(self):
+        x, y, z = -1, -1, -1
+        s1 = self.create_sphere()
+        s1.translate(x, y, z)
+        self.assertEqual(s1.x, 0)
+        self.assertEqual(s1.y, 1)
+        self.assertEqual(s1.z, 0)
+
+    def test_translate_string_x_sphere(self):
+        x, y, z = "1", 1, 1
+        s1 = self.create_sphere()
+        with self.assertRaises(TypeError):
+            s1.is_inside(x, y, z)
+    
+    def test_translate_string_y_sphere(self):
+        x, y, z = 1, "1", 1
+        s1 = self.create_sphere()
+        with self.assertRaises(TypeError):
+            s1.is_inside(x, y, z)
+    
+    def test_translate_string_z_sphere(self):
+        x, y, z = 1, 1, "1"
+        s1 = self.create_sphere()
+        with self.assertRaises(TypeError):
+            s1.is_inside(x, y, z)
+    
+    # unit_sphere test sphere
+
+    def test_unit_sphere_True_sphere(self):
+        s1 = Sphere(0, 0, 0, 1)
+        self.assertTrue(s1.is_unit_sphere())
+    
+    def test_unit_sphere_False_sphere(self):
+        s1 = Sphere(0, 0, 0, 2)
+        self.assertFalse(s1.is_unit_sphere())
+
+    # area test sphere 
+
+    def test_area_Equal_sphere(self):
+        s1 = self.create_sphere()
+        a = (4 * math.pi * 1**2)
+        self.assertEqual(s1.area, a)
+    
+    def test_area_not_Equal_sphere(self):
+        s1 = self.create_sphere()
+        a = 10
+        self.assertNotEqual(s1.area, a)
+
+    # omkrets test sphere
+
+    def test_omkrets_Equal_sphere(self):
+        s1 = self.create_sphere()
+        o = (2 * math.pi * 1)
+        self.assertEqual(s1.omkrets, o)
+    
+    def test_omkrets_Not_Equal_sphere(self):
+        s1 = self.create_sphere()
+        o = 10
+        self.assertNotEqual(s1.omkrets, o)
+
+    # volym testing sphere 
+
+    def test_volym_Equal_sphere(self):
+        s1 = self.create_sphere()
+        v = ((4 / 3) * math.pi * 1**3)
+        self.assertEqual(s1.volym, v)
+    
+    def test_volym_Not_Equal_sphere(self):
+        s1 = self.create_sphere()
+        v = 100
+        self.assertNotEqual(s1.volym, v)
 
 if __name__ == "__main__":
     unittest.main()
