@@ -4,8 +4,8 @@ from time import sleep
 import unittest
 import math
 
-from geometry_shapes import Cirkel
-from geometry_shapes import Rektangel
+from geometry_shapes import Circle
+from geometry_shapes import Rectangle
 from geometry_shapes import Cube
 from geometry_shapes import Sphere
 
@@ -18,11 +18,11 @@ class TestShapes(unittest.TestCase):
         self.radius = 1
         self.depth = 1
 
-    def create_rektangle(self):
-        return Rektangel(x= self.x, y= self.y, width=self.width, height= self.height)
+    def create_rectangle(self):
+        return Rectangle(x= self.x, y= self.y, width=self.width, height= self.height)
 
-    def create_cirkel(self):
-        return Cirkel(x= self.x, y= self.y, radius= self.radius)
+    def create_circle(self):
+        return Circle(x= self.x, y= self.y, radius= self.radius)
 
     def create_cube(self):
         return Cube(x= self.x, y= self.y, z= self.z, width= self.width, height= self.height, depth= self.depth)
@@ -31,328 +31,328 @@ class TestShapes(unittest.TestCase):
         return Sphere(x= self.x, y= self.y, z= self.z, radius= self.radius)
 
     """
-        Testning rektangel
+        Testning rectangle
 
         -----------------------------------
     """
     
-    # operator test rektangel.
+    # operator test rectangle.
 
-    def test_equal_rektangle(self):
-        r1 = self.create_rektangle()
-        r2 = Rektangel(x= 1, y= 2, width=2, height=1)
+    def test_equal_rectangle(self):
+        r1 = self.create_rectangle()
+        r2 = Rectangle(x= 1, y= 2, width=2, height=1)
         self.assertEqual(r1, r2)
     
-    def test_not_equal_rektangle(self):
-        r1 = self.create_rektangle()
-        r2 = Rektangel(x= 1, y= 2, width=3, height=2)
+    def test_not_equal_rectangle(self):
+        r1 = self.create_rectangle()
+        r2 = Rectangle(x= 1, y= 2, width=3, height=2)
         self.assertNotEqual(r1, r2)
     
-    def test_greater_rektangle(self):
-        r1 = self.create_rektangle()
-        r2 = Rektangel(x= 1, y= 2, width=1, height=1)
+    def test_greater_rectangle(self):
+        r1 = self.create_rectangle()
+        r2 = Rectangle(x= 1, y= 2, width=1, height=1)
         self.assertGreater(r1, r2)
     
-    def test_not_greater_rektangle(self):
-        r1 = self.create_rektangle()
-        r2 = Rektangel(x= 1, y= 2, width=3, height=2)
+    def test_not_greater_rectangle(self):
+        r1 = self.create_rectangle()
+        r2 = Rectangle(x= 1, y= 2, width=3, height=2)
         self.assertLess(r1, r2)
     
-    def test_greater_equal_rektangle(self):
-        r1 = self.create_rektangle()
-        r2 = Rektangel(x= 1, y= 2, width=2, height=1)
+    def test_greater_equal_rectangle(self):
+        r1 = self.create_rectangle()
+        r2 = Rectangle(x= 1, y= 2, width=2, height=1)
         self.assertGreaterEqual(r1, r2)
     
-    def test_not_greater_equal_rektangle(self):
-        r1 = self.create_rektangle()
-        r2 = Rektangel(x= 1, y= 2, width=3, height=2)
+    def test_not_greater_equal_rectangle(self):
+        r1 = self.create_rectangle()
+        r2 = Rectangle(x= 1, y= 2, width=3, height=2)
         self.assertLessEqual(r1, r2)
 
     #test error 
 
-    def test_empty_rektangle(self):
+    def test_empty_rectangle(self):
         with self.assertRaises(TypeError):
-            r = Rektangel()
+            r = Rectangle()
 
-    def test_negativ_width_rektangel(self):
+    def test_negativ_width_rectangle(self):
         with self.assertRaises(ValueError):
-            r = Rektangel(1, 1, -1, 1)
+            r = Rectangle(1, 1, -1, 1)
     
-    def test_negativ_height_rektangel(self):
+    def test_negativ_height_rectangle(self):
         with self.assertRaises(ValueError):
-            r = Rektangel(1, 1, 1, -1)
+            r = Rectangle(1, 1, 1, -1)
     
-    def test_string_width_rektangel(self):
+    def test_string_width_rectangle(self):
         with self.assertRaises(TypeError):
-            r = Rektangel(1, 1, "1", 1)
+            r = Rectangle(1, 1, "1", 1)
 
-    def test_string_height_rektangel(self):
+    def test_string_height_rectangle(self):
         with self.assertRaises(TypeError):
-            r = Rektangel(1, 1, 1, "1")
+            r = Rectangle(1, 1, 1, "1")
     
-    def test_string_x_rektangel(self):
+    def test_string_x_rectangle(self):
         with self.assertRaises(TypeError):
-            r = Rektangel("1", 1, 1, 1)
+            r = Rectangle("1", 1, 1, 1)
     
-    def test_string_y_rektangel(self):
+    def test_string_y_rectangle(self):
         with self.assertRaises(TypeError):
-            r = Rektangel(1, "1", 1, 1)
+            r = Rectangle(1, "1", 1, 1)
     
-    # Is_inside test rektangel
+    # Is_inside test rectangle
 
-    def test_is_inside_True_rektangel(self):
+    def test_is_inside_True_rectangle(self):
         x, y = 1, 2
-        r1 = self.create_rektangle()
+        r1 = self.create_rectangle()
         self.assertTrue(r1.is_inside(x, y)) 
     
-    def test_is_inside_True_border_rektangel(self):
+    def test_is_inside_True_border_rectangle(self):
         x, y = 2, 2
-        r1 = self.create_rektangle()
+        r1 = self.create_rectangle()
         self.assertTrue(r1.is_inside(x, y)) 
 
-    def test_is_inside_False_rektangel(self):
+    def test_is_inside_False_rectangle(self):
         x, y = 5, 5
-        r1 = self.create_rektangle()
+        r1 = self.create_rectangle()
         self.assertFalse(r1.is_inside(x, y))
 
-    def test_is_inside_string_x_rektangle(self):
+    def test_is_inside_string_x_rectangle(self):
         x, y = "a", 1
-        r1 = self.create_rektangle()
+        r1 = self.create_rectangle()
         with self.assertRaises(TypeError):
             r1.is_inside(x, y)
     
-    def test_is_inside_string_x_rektangle(self):
+    def test_is_inside_string_x_rectangle(self):
         x, y = 1, "1"
-        r1 = self.create_rektangle()
+        r1 = self.create_rectangle()
         with self.assertRaises(TypeError):
             r1.is_inside(x, y)
     
-    # Translate test Rektangel
+    # Translate test rectangle
 
-    def test_translate_Equal_rektangle(self):
+    def test_translate_Equal_rectangle(self):
         x, y = 1, 1
-        r1 = self.create_rektangle()
+        r1 = self.create_rectangle()
         r1.translate(x, y)
         self.assertEqual(r1.x, 2)
         self.assertEqual(r1.y, 3)
     
-    def test_translate_Not_Equal_rektangle(self):
+    def test_translate_Not_Equal_rectangle(self):
         x, y = 1, 1
-        r1 = self.create_rektangle()
+        r1 = self.create_rectangle()
         r1.translate(x, y)
         self.assertNotEqual(r1.x, 3)
         self.assertNotEqual(r1.y, 4)
 
-    def test_translate_Equal_negativ_rektangle(self):
+    def test_translate_Equal_negativ_rectangle(self):
         x, y = -1, -1
-        r1 = self.create_rektangle()
+        r1 = self.create_rectangle()
         r1.translate(x, y)
         self.assertEqual(r1.x, 0)
 
-    def test_translate_string_x_rektangel(self):
+    def test_translate_string_x_rectangle(self):
         x, y = "1", 1
-        r1 = self.create_rektangle()
+        r1 = self.create_rectangle()
         with self.assertRaises(TypeError):
             r1.is_inside(x, y)
     
-    def test_translate_string_y_rektangel(self):
+    def test_translate_string_y_rectangle(self):
         x, y = 1, "1"
-        r1 = self.create_rektangle()
+        r1 = self.create_rectangle()
         with self.assertRaises(TypeError):
             r1.is_inside(x, y)
     
-    # kvadrat test rektangel
+    # kvadrat test rectangle
 
-    def test_kvadrat_True_rektangel(self):
-        r1 = Rektangel(0, 0, 1, 1)
+    def test_kvadrat_True_rectangle(self):
+        r1 = Rectangle(0, 0, 1, 1)
         self.assertTrue(r1.square())
     
-    def test_kvadrat_False_rektangel(self):
-        r1 = Rektangel(0, 0, 1, 2)
+    def test_kvadrat_False_rectangle(self):
+        r1 = Rectangle(0, 0, 1, 2)
         self.assertFalse(r1.square())
 
-    # area test rektangel 
+    # area test rectangle 
 
-    def test_area_Equal_rektangle(self):
-        r1 = self.create_rektangle()
+    def test_area_Equal_rectangle(self):
+        r1 = self.create_rectangle()
         a = 2 
         self.assertEqual(r1.area, a)
     
-    def test_area_not_Equal_rektangle(self):
-        r1 = self.create_rektangle()
+    def test_area_not_Equal_rectangle(self):
+        r1 = self.create_rectangle()
         a = 4
         self.assertNotEqual(r1.area, a)
 
-    # omkrets test rektangel
+    # omkrets test rectangle
 
-    def test_omkrets_Equal_rektangel(self):
-        r1 = self.create_rektangle()
+    def test_omkrets_Equal_rectangle(self):
+        r1 = self.create_rectangle()
         o = 6
-        self.assertEqual(r1.omkrets, o)
+        self.assertEqual(r1.circumference, o)
     
-    def test_omkrets_Not_Equal_rektangel(self):
-        r1 = self.create_rektangle()
+    def test_omkrets_Not_Equal_rectangle(self):
+        r1 = self.create_rectangle()
         o = 10
-        self.assertNotEqual(r1.omkrets, o)
+        self.assertNotEqual(r1.circumference, o)
 
     """
-        Testning cirkel.
+        Testning circle.
 
         -----------------------------------
     """
 
     # operator test cirkel.
 
-    def test_equal_cirkel(self):
-        c1 = self.create_cirkel()
-        c2 = Cirkel(x= 1, y= 2, radius= 1)
+    def test_equal_circle(self):
+        c1 = self.create_circle()
+        c2 = Circle(x= 1, y= 2, radius= 1)
         self.assertEqual(c1, c2)
     
-    def test_not_equal_cirkel(self):
-        c1 = self.create_cirkel()
-        c2 = Cirkel(x= 1, y= 2, radius= 3)
+    def test_not_equal_circle(self):
+        c1 = self.create_circle()
+        c2 = Circle(x= 1, y= 2, radius= 3)
         self.assertNotEqual(c1, c2)
     
-    def test_greater_cirkel(self):
-        c1 = self.create_cirkel()
-        c2 = Cirkel(x= 1, y= 2, radius= 0.5)
+    def test_greater_circle(self):
+        c1 = self.create_circle()
+        c2 = Circle(x= 1, y= 2, radius= 0.5)
         self.assertGreater(c1, c2)
     
-    def test_not_greater_cirkel(self):
-        c1 = self.create_cirkel()
-        c2 = Cirkel(x= 1, y= 2, radius= 5)
+    def test_not_greater_circle(self):
+        c1 = self.create_circle()
+        c2 = Circle(x= 1, y= 2, radius= 5)
         self.assertLess(c1, c2)
     
-    def test_greater_equal_cirkel(self):
-        c1 = self.create_cirkel()
-        c2 = Cirkel(x= 1, y= 2, radius=1)
+    def test_greater_equal_circle(self):
+        c1 = self.create_circle()
+        c2 = Circle(x= 1, y= 2, radius=1)
         self.assertGreaterEqual(c1, c2)
     
-    def test_not_greater_equal_cirkel(self):
-        c1 = self.create_cirkel()
-        c2 = Cirkel(x= 1, y= 2, radius= 1)
+    def test_not_greater_equal_circle(self):
+        c1 = self.create_circle()
+        c2 = Circle(x= 1, y= 2, radius= 1)
         self.assertLessEqual(c1, c2)
 
     #test error 
 
-    def test_empty_cirkel(self):
+    def test_empty_circle(self):
         with self.assertRaises(TypeError):
-            r = Cirkel()
+            r = Circle()
 
-    def test_negativ_radius(self):
+    def test_negativ_radius_circle(self):
         with self.assertRaises(ValueError):
-            r = Cirkel(1, 1, -1)
+            r = Circle(1, 1, -1)
     
-    def test_string_radius_cirkel(self):
+    def test_string_radius_circle(self):
         with self.assertRaises(TypeError):
-            r = Cirkel(1, 1, "1")
+            r = Circle(1, 1, "1")
 
     
-    def test_string_x_cirkel(self):
+    def test_string_x_circle(self):
         with self.assertRaises(TypeError):
-            r = Cirkel("1", 1, 1)
+            r = Circle("1", 1, 1)
     
-    def test_string_y_cirkel(self):
+    def test_string_y_circle(self):
         with self.assertRaises(TypeError):
-            r = Cirkel(1, "1", 1)
+            r = Circle(1, "1", 1)
     
-    # Is_inside test cirkel
+    # Is_inside test circle
 
-    def test_is_inside_True_cirkel(self):
+    def test_is_inside_True_circle(self):
         x, y = 1, 2
-        c1 = self.create_cirkel()
+        c1 = self.create_circle()
         self.assertTrue(c1.is_inside(x, y)) 
     
-    def test_is_inside_True_border_cirkel(self):
+    def test_is_inside_True_border_circle(self):
         x, y = 2, 2
-        c1 = self.create_cirkel()
+        c1 = self.create_circle()
         self.assertTrue(c1.is_inside(x, y)) 
 
-    def test_is_inside_False_cirkel(self):
+    def test_is_inside_False_circle(self):
         x, y = 5, 5
-        c1 = self.create_cirkel()
+        c1 = self.create_circle()
         self.assertFalse(c1.is_inside(x, y))
 
-    def test_is_inside_string_x_cirkel(self):
+    def test_is_inside_string_x_circle(self):
         x, y = "a", 1
-        c1 = self.create_cirkel()
+        c1 = self.create_circle()
         with self.assertRaises(TypeError):
             c1.is_inside(x, y)
     
-    def test_is_inside_string_y_cirkel(self):
+    def test_is_inside_string_y_circle(self):
         x, y = 1, "1"
-        c1 = self.create_cirkel()
+        c1 = self.create_circle()
         with self.assertRaises(TypeError):
             c1.is_inside(x, y)
     
     # Translate test Cirkel
 
-    def test_translate_Equal_cirkel(self):
+    def test_translate_Equal_circle(self):
         x, y = 1, 1
-        c1 = self.create_cirkel()
+        c1 = self.create_circle()
         c1.translate(x, y)
         self.assertEqual(c1.x, 2)
         self.assertEqual(c1.y, 3)
     
-    def test_translate_Not_Equal_cirkel(self):
+    def test_translate_Not_Equal_circle(self):
         x, y = 1, 1
-        c1 = self.create_cirkel()
+        c1 = self.create_circle()
         c1.translate(x, y)
         self.assertNotEqual(c1.x, 3)
         self.assertNotEqual(c1.y, 4)
 
-    def test_translate_Equal_negativ_cirkel(self):
+    def test_translate_Equal_negativ_circle(self):
         x, y = -1, -1
-        c1 = self.create_cirkel()
+        c1 = self.create_circle()
         c1.translate(x, y)
         self.assertEqual(c1.x, 0)
         self.assertEqual(c1.y, 1)
 
-    def test_translate_string_x_cirkel(self):
+    def test_translate_string_x_circle(self):
         x, y = "1", 1
-        c1 = self.create_cirkel()
+        c1 = self.create_circle()
         with self.assertRaises(TypeError):
             c1.is_inside(x, y)
     
-    def test_translate_string_y_cirkel(self):
+    def test_translate_string_y_circle(self):
         x, y = 1, "1"
-        c1 = self.create_cirkel()
+        c1 = self.create_circle()
         with self.assertRaises(TypeError):
             c1.is_inside(x, y)
     
     # enhets_Cirkel test Cirkel
 
-    def test_enhets_Cirkel_True_cirkel(self):
-        c1 = Cirkel(0, 0, 1)
-        self.assertTrue(c1.enhets_Cirkel())
+    def test_enhets_Cirkel_True_circle(self):
+        c1 = Circle(0, 0, 1)
+        self.assertTrue(c1.unit_Circle())
     
-    def test_enhets_Cirkel_False_cirkel(self):
-        c1 = Cirkel(0, 0, 2)
-        self.assertFalse(c1.enhets_Cirkel())
+    def test_enhets_Cirkel_False_circle(self):
+        c1 = Circle(0, 0, 2)
+        self.assertFalse(c1.unit_Circle())
 
-    # area test Cirkel 
+    # area test Circle 
 
-    def test_area_Equal_cirkel(self):
-        c1 = self.create_cirkel()
+    def test_area_Equal_circle(self):
+        c1 = self.create_circle()
         a = math.pi * 1**2
         self.assertEqual(c1.area, a)
     
-    def test_area_not_Equal_cirkel(self):
-        c1 = self.create_cirkel()
+    def test_area_not_Equal_circle(self):
+        c1 = self.create_circle()
         a = 4
         self.assertNotEqual(c1.area, a)
 
-    # omkrets test cirkel
+    # circumference test circle
 
-    def test_omkrets_Equal_cirkel(self):
-        c1 = self.create_cirkel()
+    def test_circumference_Equal_circle(self):
+        c1 = self.create_circle()
         o = 2*math.pi * 1
-        self.assertEqual(c1.omkrets, o)
+        self.assertEqual(c1.circumference, o)
     
-    def test_omkrets_Not_Equal_cirkel(self):
-        c1 = self.create_cirkel()
+    def test_circumference_Not_Equal_circle(self):
+        c1 = self.create_circle()
         o = 10
-        self.assertNotEqual(c1.omkrets, o)
+        self.assertNotEqual(c1.circumference, o)
 
     
     """
@@ -536,29 +536,29 @@ class TestShapes(unittest.TestCase):
         a = 16
         self.assertNotEqual(cu1.area, a)
 
-    # omkrets test cube
+    # circumference test cube
 
-    def test_omkrets_Equal_cube(self):
+    def test_circumference_Equal_cube(self):
         cu1 = self.create_cube()
         o = 16
-        self.assertEqual(cu1.omkrets, o)
+        self.assertEqual(cu1.circumference, o)
     
-    def test_omkrets_Not_Equal_cube(self):
+    def test_circumference_Not_Equal_cube(self):
         cu1 = self.create_cube()
         o = 10
-        self.assertNotEqual(cu1.omkrets, o)
+        self.assertNotEqual(cu1.circumference, o)
 
-    # volym test cube
+    # volume test cube
 
-    def test_volym_Equal_cube(self):
+    def test_volume_Equal_cube(self):
         cu1 = self.create_cube()
         v = 2
-        self.assertEqual(cu1.volym, v)
+        self.assertEqual(cu1.volume, v)
     
     def test_volym_Not_Equal_cube(self):
         cu1 = self.create_cube()
         v = 7
-        self.assertNotEqual(cu1.volym, v)
+        self.assertNotEqual(cu1.volume, v)
 
     """
         Testning Sphere.
@@ -584,7 +584,7 @@ class TestShapes(unittest.TestCase):
         self.assertGreater(s1, s2)
     
     def test_not_greater_sphere(self):
-        s1 = self.create_cirkel()
+        s1 = self.create_circle()
         s2 = Sphere(x= 1, y= 2, z= 1, radius= 5)
         self.assertLess(s1, s2)
     
@@ -650,13 +650,13 @@ class TestShapes(unittest.TestCase):
     
     def test_is_inside_string_y_sphere(self):
         x, y, z = 1, "1", 1
-        s1 = self.create_cirkel()
+        s1 = self.create_circle()
         with self.assertRaises(TypeError):
             s1.is_inside(x, y, z)
     
     def test_is_inside_string_z_sphere(self):
         x, y, z = 1, 1, "1"
-        s1 = self.create_cirkel()
+        s1 = self.create_circle()
         with self.assertRaises(TypeError):
             s1.is_inside(x, y, z)
     
@@ -726,29 +726,29 @@ class TestShapes(unittest.TestCase):
         a = 10
         self.assertNotEqual(s1.area, a)
 
-    # omkrets test sphere
+    # circumference test sphere
 
-    def test_omkrets_Equal_sphere(self):
+    def test_circumference_Equal_sphere(self):
         s1 = self.create_sphere()
         o = (2 * math.pi * 1)
-        self.assertEqual(s1.omkrets, o)
+        self.assertEqual(s1.circumference, o)
     
-    def test_omkrets_Not_Equal_sphere(self):
+    def test_circumference_Not_Equal_sphere(self):
         s1 = self.create_sphere()
         o = 10
-        self.assertNotEqual(s1.omkrets, o)
+        self.assertNotEqual(s1.circumference, o)
 
-    # volym testing sphere 
+    # volume testing sphere 
 
-    def test_volym_Equal_sphere(self):
+    def test_volume_Equal_sphere(self):
         s1 = self.create_sphere()
         v = ((4 / 3) * math.pi * 1**3)
-        self.assertEqual(s1.volym, v)
+        self.assertEqual(s1.volume, v)
     
-    def test_volym_Not_Equal_sphere(self):
+    def test_volume_Not_Equal_sphere(self):
         s1 = self.create_sphere()
         v = 100
-        self.assertNotEqual(s1.volym, v)
+        self.assertNotEqual(s1.volume, v)
 
 if __name__ == "__main__":
     unittest.main()

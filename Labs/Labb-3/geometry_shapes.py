@@ -1,8 +1,7 @@
 from __future__ import annotations
 from turtle import circle
-import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
-from matplotlib.patches import Circle
+from matplotlib.patches import Rectangle as rec
+from matplotlib.patches import Circle as cir
 import math
 from abc import abstractmethod, ABC
 import numpy as np
@@ -105,10 +104,10 @@ class shapes(ABC):
     def area():
         pass
 
-    # abstractmetod for omkrets.
+    # abstractmetod for circumference.
     @property
     @abstractmethod
-    def omkrets():
+    def circumference():
         pass
     
     # method for moving shape
@@ -140,15 +139,15 @@ class shapes(ABC):
     # Overload metods
     # ==
     def __eq__(self, other) -> bool:
-        return (self.area == other.area) and (self.omkrets == other.omkrets)
+        return (self.area == other.area) and (self.circumference == other.circumference)
 
     # > and <
     def __gt__(self, other) -> bool:
-        return (self.area > other.area) and (self.omkrets > other.omkrets)
+        return (self.area > other.area) and (self.circumference > other.circumference)
 
     # >= and <=
     def __ge__(self, other) -> bool:
-        return (self.area >= self.area) and (self.omkrets >= other.omkrets)
+        return (self.area >= self.area) and (self.circumference >= other.circumference)
     
     # __str__() overload
     def __str__(self) -> str:
@@ -159,9 +158,9 @@ class shapes(ABC):
         return f"Shape: 'x' = {self._x} 'y' = {self._y}"
 
 
-class Rektangel(shapes):
+class Rectangle(shapes):
     """
-    A class used to represent an Rectangel
+    A class used to represent an Rectangle
     
     -----------------------------------
 
@@ -189,16 +188,16 @@ class Rektangel(shapes):
     area : -> float
         getter for the rectangle area.
     
-    omkrets : -> float
-        getter for the rectangle omkrets. 
+    circumference : -> float
+        getter for the rectangle circumference. 
 
     -----------------------------------
     
     Methods: 
     --------
 
-    kvadrat() -> bool
-        checks if rectangel is a square and returns a bool.
+    square() -> bool
+        checks if rectangle is a square and returns a bool.
 
     is_inside() -> bool
         checks if a point is inside shape.
@@ -282,12 +281,12 @@ class Rektangel(shapes):
     # property getter for rectangel area.
     @property
     def area(self) -> float:
-        return self.width * self.height  # returns the area of the rektangle.
+        return self.width * self.height  # returns the area of the rectangle.
 
-    # property getter for rectangle omkrets.
+    # property getter for rectangle circumference.
     @property
-    def omkrets(self) -> float:
-        return (self.width * 2) + (self.height * 2)  # returns the omkrets of rectangle.
+    def circumference(self) -> float:
+        return (self.width * 2) + (self.height * 2)  # returns the circumference of rectangle.
 
     # method for checking if the rectangle is a square.
     def square(self) -> bool:
@@ -340,8 +339,8 @@ class Rektangel(shapes):
         # makes a random color in rgb
         rgb = np.random.rand(3,)
 
-        # returns the ploted rektangel
-        return Rectangle(
+        # returns the ploted rectangle
+        return rec(
             (self._x - (self._width / 2), self._y - (self._height / 2)),
             self._width,
             self._height,
@@ -352,16 +351,16 @@ class Rektangel(shapes):
 
     # __str__() overload
     def __str__(self) -> str:
-        return f"Rektangel is class {self.__class__.__name__} and is a square = {self.square()}"
+        return f"Rectangle is class {self.__class__.__name__} and is a square = {self.square()}"
 
     # __repr__() overload
     def __repr__(self) -> str:
-        return f"Rektangel: 'x' = {self._x} 'y' = {self._y} 'width' = {self._width} 'height' = {self._height}"
+        return f"Rectangle: 'x' = {self._x} 'y' = {self._y} 'width' = {self._width} 'height' = {self._height}"
 
-class Cirkel(shapes):
+class Circle(shapes):
 
     """
-    A class used to represent an Cirkel 
+    A class used to represent an Circle
     
     -----------------------------------
 
@@ -370,7 +369,7 @@ class Cirkel(shapes):
  
 
     radius : int | float 
-        represents the radius of the cirkel.
+        represents the radius of the circle.
 
     
     -----------------------------------
@@ -379,21 +378,21 @@ class Cirkel(shapes):
     ----------
 
     radius : int | float -> float 
-        getter and setter for cirkle radius.
+        getter and setter for circle radius.
 
     area : -> float
-        getter for the cirkel area.
+        getter for the circle area.
     
-    omkrets : -> float
-        getter for the cirkel omkrets. 
+    circumference : -> float
+        getter for the circle circumference. 
 
     -----------------------------------
     
     Methods: 
     --------
 
-    enhets_Cirkel() -> bool
-        checks if cirkel is a enhets cirkel and returns a bool.
+    enhets_Circle() -> bool
+        checks if circle is a enhets circle and returns a bool.
     
     is_inside() -> bool
         checks if a point is inside shape.
@@ -413,7 +412,7 @@ class Cirkel(shapes):
         -----------
 
         radius : int | float 
-        represents the radius of the cirkel.
+        represents the radius of the circle.
 
         -----------------------------------
 
@@ -451,16 +450,16 @@ class Cirkel(shapes):
     def area(self) -> float:
         return math.pi * (self._radius ** 2)
 
-    # property getter for omkrets.
+    # property getter for circumference.
     @property
-    def omkrets(self) -> float:
+    def circumference(self) -> float:
         return 2 * math.pi * self._radius
 
-    # method to check if cirkel == a enhets cirkel.
-    def enhets_Cirkel(self) -> bool:
+    # method to check if circle == a enhets circle.
+    def unit_Circle(self) -> bool:
         """
-        checks if the cirkel is a enhets cirkel.
-        retruns True if cirkel is and False if not. 
+        checks if the circle is a enhets circle.
+        retruns True if circle is and False if not. 
         -----------------------------------
 
         """
@@ -504,7 +503,7 @@ class Cirkel(shapes):
         rgb = np.random.rand(3,)
 
         # returns the ploted cirkel.
-        return Circle(
+        return cir(
             (self._x, self._y),
             self._radius,
             linewidth=2.5,
@@ -514,13 +513,13 @@ class Cirkel(shapes):
 
     # __str__() overload
     def __str__(self) -> str:
-        return f"Cirkel is class {self.__class__.__name__} and is a enhets cirkel = {self.enhets_Cirkel()}"
+        return f"Circle is class {self.__class__.__name__} and is a enhets circle = {self.unit_Circle()}"
 
     # __repr__() overload
     def __repr__(self) -> str:
-        return f"Cirkel: 'x' = {self._x} 'y' = {self._y} 'radius' = {self._radius}"
+        return f"Circle: 'x' = {self._x} 'y' = {self._y} 'radius' = {self._radius}"
 
-class Cube(Rektangel):
+class Cube(Rectangle):
 
     """
     A class used to represent an Cube
@@ -559,11 +558,11 @@ class Cube(Rektangel):
     area : -> float
         getter for the cube area.
     
-    omkrets : -> float
-        getter for the cube omkrets. 
+    circumference : -> float
+        getter for the cube circumference. 
     
-    volym : -> float
-        getter for the cube volym.
+    volume : -> float
+        getter for the cube volume.
 
     -----------------------------------
     
@@ -646,15 +645,15 @@ class Cube(Rektangel):
     def area(self) -> float:
         return self._width * self._height * self._depth # returns the area of the cube.
 
-    # property getter for cube omkrets.
+    # property getter for cube circumference.
     @property
-    def omkrets(self) -> float:
-        return (self._width * 4) + (self._height * 4) + (self._depth * 4) # returns the omkrets of cube.
+    def circumference(self) -> float:
+        return (self._width * 4) + (self._height * 4) + (self._depth * 4) # returns the circumference of cube.
 
-    # property getter for cube volym 
+    # property getter for cube volume 
     @property
-    def volym(self) -> float:
-        return (self._width * self._height * self._depth) # returns the volym of cube.
+    def volume(self) -> float:
+        return (self._width * self._height * self._depth) # returns the volume of cube.
 
     # method for moving shape
     def translate(self, x: int | float, y: int | float, z: int | float):
@@ -720,7 +719,7 @@ class Cube(Rektangel):
     def __repr__(self) -> str:
         return f"Cube: 'x' = {self._x} 'y' = {self._y} 'z' = {self._z} 'width' = {self._width} 'height' = {self._height} 'depth' = {self._depth}"
 
-class Sphere(Cirkel): 
+class Sphere(Circle): 
 
     """
     A class used to represent an sphere
@@ -744,11 +743,11 @@ class Sphere(Cirkel):
     area : -> float
         getter for the sphere area.
     
-    omkrets : -> float
-        getter for the sphere omkrets. 
+    circumference : -> float
+        getter for the sphere circumference. 
     
-    volym : -> float
-        getter for the sphere volym.
+    volume : -> float
+        getter for the sphere volume.
 
     -----------------------------------
     
@@ -808,15 +807,15 @@ class Sphere(Cirkel):
     def area(self) -> float:
         return (4 * math.pi * self._radius**2) # returns the area of the sphere.
     
-    # property getter for sphere omkrets.
+    # property getter for sphere circumference.
     @property
-    def omkrets(self) -> float:
-        return (2 * math.pi * self._radius) # returns the omkrets of sphere.
+    def circumference(self) -> float:
+        return (2 * math.pi * self._radius) # returns the circumference of sphere.
 
-    # property getter for sphere volym 
+    # property getter for sphere volume 
     @property
-    def volym(self) -> float:
-        return ((4 / 3) * math.pi * self._radius**3) # returns the volym of sphere.
+    def volume(self) -> float:
+        return ((4 / 3) * math.pi * self._radius**3) # returns the volume of sphere.
 
     # method for moving shape
     def translate(self, x: int | float, y: int | float, z: int | float):
