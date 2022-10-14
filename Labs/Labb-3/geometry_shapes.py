@@ -1,5 +1,4 @@
 from __future__ import annotations
-from turtle import circle
 from matplotlib.patches import Rectangle as rec
 from matplotlib.patches import Circle as cir
 import math
